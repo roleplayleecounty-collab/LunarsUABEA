@@ -1,0 +1,54 @@
+name: Build LunarsUABEA Ubuntu
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    
+    - name: Remove TexToolWrap VC++ project
+      run: dotnet sln LunarsUABEA.sln remove TexToolWrap/TexToolWrap.vcxproj
+
+    - name: Restore
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    
+    - name: Fix libonigwrap directory
+      run: cp LunarsUABEA/bin/Release/net6.0/runtimes/linux/native/libonigwrap.so LunarsUABEA/bin/Release/net6.0/runtimes/linux-x64/native/libonigwrap.so
+    
+    - name: Remove unused platforms
+      run: find LunarsUABEA/bin/Release/net6.0/runtimes/* -maxdepth 0 ! -name linux-x64 -type d -exec rm -r {} +
+
+    - name: Publish standalone Linux app
+      run: dotnet publish LunarsUABEA/LunarsUABEA.csproj --configuration Release --runtime linux-x64 --self-contained true --output LunarsUABEA/publish/linux-x64
+
+    - name: Assemble Linux download
+      run: |
+        mkdir -p LunarsUABEA/publish/linux-x64/plugins LunarsUABEA/publish/linux-x64/runtimes/linux-x64/native
+        cp -a LunarsUABEA/bin/Release/net6.0/plugins/. LunarsUABEA/publish/linux-x64/plugins/
+        cp -a LunarsUABEA/bin/Release/net6.0/runtimes/linux-x64/native/. LunarsUABEA/publish/linux-x64/runtimes/linux-x64/native/
+        cp ReleaseFiles/classdata.tpk LunarsUABEA/publish/linux-x64/
+        chmod +x LunarsUABEA/publish/linux-x64/LunarsUABEA
+      
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: lunarsuabea-ubuntu
+        path: LunarsUABEA/publish/linux-x64

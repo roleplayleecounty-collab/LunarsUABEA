@@ -1,0 +1,159 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+        Width="1000" Height="700" MinWidth="820" MinHeight="620"
+        Background="{DynamicResource BrandBackgroundBrush}"
+        FontFamily="Segoe UI"
+        Icon="/Assets/lunarsuabea16.ico"
+        x:Class="LunarsUABEA.MainWindow"
+        Title="Lunars UABEA"
+        DragDrop.AllowDrop="True"
+        WindowStartupLocation="CenterScreen">
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="Padding" Value="14,10" />
+      <Setter Property="MinHeight" Value="40" />
+      <Setter Property="CornerRadius" Value="8" />
+    </Style>
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="{DynamicResource BrandAccentBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource BrandAccentTextBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource BrandAccentBrush}" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.secondary">
+      <Setter Property="Background" Value="#29243B" />
+      <Setter Property="Foreground" Value="#F4F0FF" />
+      <Setter Property="BorderBrush" Value="#4C4268" />
+    </Style>
+  </Window.Styles>
+  <Grid RowDefinitions="Auto,*">
+    <Menu Grid.Row="0" Height="34" Padding="20,0"
+          Background="{DynamicResource BrandBackgroundBrush}"
+          Foreground="{DynamicResource BrandTextBrush}"
+          Name="menuMain">
+      <MenuItem Header="File">
+        <MenuItem Header="Open" HotKey="Ctrl+O" InputGesture="Ctrl+O" Name="menuOpen" />
+        <MenuItem Header="Load Package File" HotKey="Ctrl+P" InputGesture="Ctrl+P" Name="menuLoadPackageFile" />
+        <MenuItem Header="Close" HotKey="Ctrl+W" InputGesture="Ctrl+W" Name="menuClose" />
+        <MenuItem Header="Save" HotKey="Ctrl+S" InputGesture="Ctrl+S" Name="menuSave" />
+        <MenuItem Header="Save as..." HotKey="Ctrl+Shift+S" InputGesture="Ctrl+Shift+S" Name="menuSaveAs" />
+        <Separator />
+        <MenuItem Header="Compress" HotKey="Ctrl+M" InputGesture="Ctrl+M" Name="menuCompress" />
+        <MenuItem Header="Exit" HotKey="Ctrl+Q" InputGesture="Ctrl+Q" Name="menuExit" />
+      </MenuItem>
+      <MenuItem Header="Options">
+        <MenuItem Header="Toggle Dark Theme" Name="menuToggleDarkTheme" />
+        <MenuItem Header="Enable/Disable Cpp2Il" Name="menuToggleCpp2Il" />
+      </MenuItem>
+      <MenuItem Header="Help">
+        <MenuItem Header="About..." Name="menuAbout" />
+      </MenuItem>
+    </Menu>
+
+    <Grid Grid.Row="1" Margin="28,22,28,20" RowDefinitions="Auto,*,Auto">
+      <Border Grid.Row="0" Padding="24" CornerRadius="16"
+              Background="{DynamicResource BrandHeroBrush}">
+        <Grid ColumnDefinitions="Auto,*,Auto">
+          <Image Grid.Column="0" Source="/Assets/logo.png"
+                 Width="270" Height="90" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,26,0" />
+          <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="8" Margin="0,0,26,0">
+            <TextBlock Text="Your Unity asset workspace"
+                       FontSize="20" FontWeight="SemiBold" Foreground="#F6F2FF" />
+            <TextBlock Text="Browse, edit, import, and export game assets with Lunars UABEA."
+                       FontSize="13" TextWrapping="Wrap" Foreground="#C3BDD6" />
+          </StackPanel>
+          <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="10">
+            <Button Content="Open a file" Classes="primary" Name="btnOpenAssets" />
+            <Button Content="Load mod package" Classes="secondary" Name="btnLoadPackage" />
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <Grid Grid.Row="1" Margin="0,18,0,18" ColumnDefinitions="*,300">
+        <Border Grid.Column="0" Padding="22" Margin="0,0,18,0" CornerRadius="14"
+                Background="{DynamicResource BrandPanelBrush}"
+                BorderBrush="{DynamicResource BrandBorderBrush}" BorderThickness="1">
+          <Grid RowDefinitions="Auto,Auto,*,Auto">
+            <StackPanel Grid.Row="0" Spacing="5">
+              <TextBlock Text="Bundle workspace" FontSize="20" FontWeight="SemiBold"
+                         Foreground="{DynamicResource BrandTextBrush}" />
+              <TextBlock Text="Choose a bundle to manage the files inside."
+                         Foreground="{DynamicResource BrandMutedBrush}" FontSize="13" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Margin="0,22,0,0" Spacing="8">
+              <TextBlock Text="CURRENT FILE" FontSize="11" FontWeight="SemiBold"
+                         Foreground="{DynamicResource BrandMutedBrush}" />
+              <TextBlock Text="No file opened." FontSize="15" FontWeight="SemiBold"
+                         Foreground="{DynamicResource BrandTextBrush}" Name="lblFileName" />
+              <ComboBox Height="40" IsEnabled="False" Name="comboBox">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding}" Foreground="{Binding Color}" />
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Margin="0,18,0,0" Spacing="10">
+              <TextBlock Text="FILE ACTIONS" FontSize="11" FontWeight="SemiBold"
+                         Foreground="{DynamicResource BrandMutedBrush}" />
+              <WrapPanel>
+                <Button Content="Export" Classes="primary" IsEnabled="False" Name="btnExport" Margin="0,0,8,8" />
+                <Button Content="Export all" IsEnabled="False" Name="btnExportAll" Margin="0,0,8,8" />
+                <Button Content="Import" IsEnabled="False" Name="btnImport" Margin="0,0,8,8" />
+                <Button Content="Import all" IsEnabled="False" Name="btnImportAll" Margin="0,0,8,8" />
+                <Button Content="Rename" IsEnabled="False" Name="btnRename" Margin="0,0,8,8" />
+                <Button Content="Remove" IsEnabled="False" Name="btnRemove" Margin="0,0,8,8" />
+                <Button Content="Info" IsEnabled="False" Name="btnInfo" Margin="0,0,8,8" />
+              </WrapPanel>
+            </StackPanel>
+          </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Padding="22" CornerRadius="14"
+                Background="{DynamicResource BrandPanelBrush}"
+                BorderBrush="{DynamicResource BrandBorderBrush}" BorderThickness="1">
+          <StackPanel Spacing="18">
+            <StackPanel Spacing="5">
+              <TextBlock Text="A quick start" FontSize="18" FontWeight="SemiBold"
+                         Foreground="{DynamicResource BrandTextBrush}" />
+              <TextBlock Text="Everything you need to get moving."
+                         Foreground="{DynamicResource BrandMutedBrush}" FontSize="13" />
+            </StackPanel>
+            <StackPanel Spacing="14">
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock Text="01" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource BrandAccentBrush}" />
+                <TextBlock Text="Open an assets or bundle file" TextWrapping="Wrap"
+                           Foreground="{DynamicResource BrandTextBrush}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock Text="02" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource BrandAccentBrush}" />
+                <TextBlock Text="Select a file from the bundle" TextWrapping="Wrap"
+                           Foreground="{DynamicResource BrandTextBrush}" />
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock Text="03" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource BrandAccentBrush}" />
+                <TextBlock Text="Import, export, or edit your assets" TextWrapping="Wrap"
+                           Foreground="{DynamicResource BrandTextBrush}" />
+              </StackPanel>
+            </StackPanel>
+            <Border Padding="12" CornerRadius="8" Background="{DynamicResource BrandBackgroundBrush}">
+              <TextBlock Text="Tip: You can also drag and drop files onto this window."
+                         FontSize="12" TextWrapping="Wrap"
+                         Foreground="{DynamicResource BrandMutedBrush}" />
+            </Border>
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <TextBlock Grid.Row="2" Text="LUNARS UABEA  ·  UNITY ASSET BUNDLE EXPLORER"
+                 FontSize="11"
+                 Foreground="{DynamicResource BrandMutedBrush}"
+                 HorizontalAlignment="Center" />
+    </Grid>
+  </Grid>
+</Window>

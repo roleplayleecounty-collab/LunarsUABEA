@@ -1,0 +1,44 @@
+name: Build LunarsUABEA Windows
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Build
+      run: msbuild LunarsUABEA.sln /restore /p:Configuration=Release
+    
+    - name: Publish standalone Windows app
+      run: dotnet publish LunarsUABEA\LunarsUABEA.csproj --configuration Release --runtime win-x64 --self-contained true --output LunarsUABEA\publish\win-x64
+
+    - name: Assemble Windows download
+      run: |
+        New-Item -ItemType Directory -Force -Path "LunarsUABEA\publish\win-x64\plugins", "LunarsUABEA\publish\win-x64\runtimes\win-x64\native"
+        Copy-Item -Path "LunarsUABEA\bin\Release\net6.0\plugins\*" -Destination "LunarsUABEA\publish\win-x64\plugins" -Recurse -Force
+        Copy-Item -Path "LunarsUABEA\bin\Release\net6.0\runtimes\win-x64\native\*" -Destination "LunarsUABEA\publish\win-x64\runtimes\win-x64\native" -Recurse -Force
+        Copy-Item -Path "ReleaseFiles\classdata.tpk" -Destination "LunarsUABEA\publish\win-x64"
+      
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: lunarsuabea-windows
+        path: LunarsUABEA/publish/win-x64

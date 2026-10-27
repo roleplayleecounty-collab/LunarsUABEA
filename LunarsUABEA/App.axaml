@@ -1,0 +1,52 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             xmlns:uabea="clr-namespace:LunarsUABEA"
+             x:Class="LunarsUABEA.App">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+          <SolidColorBrush x:Key="BrandBackgroundBrush" Color="#F5F3FA" />
+          <SolidColorBrush x:Key="BrandPanelBrush" Color="#FFFFFF" />
+          <SolidColorBrush x:Key="BrandBorderBrush" Color="#E4DFEE" />
+          <SolidColorBrush x:Key="BrandTextBrush" Color="#252238" />
+          <SolidColorBrush x:Key="BrandMutedBrush" Color="#716B82" />
+          <SolidColorBrush x:Key="BrandAccentBrush" Color="#7044B8" />
+          <SolidColorBrush x:Key="BrandAccentTextBrush" Color="#FFFFFF" />
+          <SolidColorBrush x:Key="BrandHeroBrush" Color="#19162D" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="BrandBackgroundBrush" Color="#0E0C18" />
+          <SolidColorBrush x:Key="BrandPanelBrush" Color="#171424" />
+          <SolidColorBrush x:Key="BrandBorderBrush" Color="#302A43" />
+          <SolidColorBrush x:Key="BrandTextBrush" Color="#F4F0FF" />
+          <SolidColorBrush x:Key="BrandMutedBrush" Color="#A9A1BA" />
+          <SolidColorBrush x:Key="BrandAccentBrush" Color="#B693FF" />
+          <SolidColorBrush x:Key="BrandAccentTextBrush" Color="#191329" />
+          <SolidColorBrush x:Key="BrandHeroBrush" Color="#19162D" />
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+	<Application.Styles>
+	  <SimpleTheme/>
+	  <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml"/>
+    <StyleInclude Source="avares://AvaloniaEdit/Themes/Simple/AvaloniaEdit.xaml" />
+    <StyleInclude Source="/Styles/ExtendedControlStyles.axaml"/>
+    <StyleInclude Source="/Styles/ImprovedTabStyles.axaml"/>
+    <StyleInclude Source="/Styles/ImprovedHeaderedContentControlStyles.axaml"/>
+    <Style Selector="Window">
+      <Setter Property="FontFamily" Value="Segoe UI" />
+    </Style>
+    <Style Selector="TextBlock">
+      <Setter Property="FontFamily" Value="Segoe UI" />
+    </Style>
+    <Style>
+      <Style.Resources>
+        <!-- thicker scrollbar -->
+        <sys:Double x:Key="ScrollBarThumbThickness">14</sys:Double>
+      </Style.Resources>
+    </Style>
+  </Application.Styles>
+</Application>

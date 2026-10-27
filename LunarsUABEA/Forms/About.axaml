@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="310"
+        Width="480" Height="310"
+        Icon="/Assets/lunarsuabea16.ico"
+        CanResize="False"
+        x:Class="LunarsUABEA.About"
+        Title="About Lunars UABEA"
+        WindowStartupLocation="CenterOwner">
+  <Grid Margin="24">
+    <Grid RowDefinitions="*,Auto">
+      <StackPanel Grid.Row="0" Spacing="12">
+        <Image Source="/Assets/logo.png" HorizontalAlignment="Left" Width="270" Height="90" Stretch="Uniform" />
+        <TextBlock Text="Lunars UABEA is a workspace for exploring and editing Unity asset bundles."
+                   TextWrapping="Wrap" FontSize="14" />
+        <TextBlock Text="Built on UABEA and AssetsTools.NET. Original project credits:"
+                   TextWrapping="Wrap" />
+        <TextBlock Text="github.com/DerPopo/UABE&#10;github.com/nesrak1/UABEA&#10;github.com/nesrak1/AssetsTools.NET"
+                   TextWrapping="Wrap" />
+      </StackPanel>
+      <Button Grid.Row="1" Content="Done" HorizontalAlignment="Right"
+              Height="36" Width="90" Name="btnOk" />
+    </Grid>
+  </Grid>
+</Window>
